@@ -8,6 +8,7 @@
     "start:api": "node dist/api/index.js",
     "start:services": "node dist/services/index.js",
     "build": "rm -rf dist && tsc",
+    "postinstall": "npm run build",
     "proto-gen": "proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=src/lib/proto/ proto/*.proto"
   },
   "keywords": [],
