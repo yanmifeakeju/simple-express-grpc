@@ -1,9 +1,8 @@
 import * as grpc from '@grpc/grpc-js';
-
-const PORT = 8080;
+import { config } from '../../config/config';
 
 const intializeGRPCServer = (server: grpc.Server) => {
-  server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
+  server.bindAsync(`0.0.0.0:${config.grpc.port}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
     if (err) {
       console.error(err);
       return;

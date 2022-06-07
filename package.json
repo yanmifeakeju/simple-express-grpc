@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/server.js",
+    "start:api": "node dist/api/index.js",
+    "start:services": "node dist/services/index.js",
     "build": "rm -rf dist && tsc",
-    "proto-gen": "proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=src/lib/proto/ src/lib/proto/*.proto"
+    "proto-gen": "proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=src/lib/proto/ proto/*.proto"
   },
   "keywords": [],
   "author": "",
