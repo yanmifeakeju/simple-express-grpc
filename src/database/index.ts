@@ -1,9 +1,9 @@
 import mongoose from './connect';
-import User from './schemas/Users';
-import Directory from './schemas/Directory';
+import UserSchema from './models/Users';
+import Directory from './models/Directory';
 
 const db = {
-  users: mongoose.model('User', User),
+  users: mongoose.model('User', UserSchema),
   directories: mongoose.model('Directory', Directory)
 };
 

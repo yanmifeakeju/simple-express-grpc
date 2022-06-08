@@ -2,10 +2,12 @@ import { createUserRequest } from '../../lib/proto/userPackage/createUserRequest
 import { createUserResponse__Output } from '../../lib/proto/userPackage/createUserResponse';
 import Joi from 'joi';
 import db from '../../database';
-import { hashPassword } from '../../lib/utils/auth';
+import { hashPassword, verifyPassword } from '../../lib/utils/auth';
 
-export const createNewUser = async ({ email, password, username }: createUserRequest): Promise<createUserResponse__Output> => {
+export const createNewUser = async ({ email, password, username }: createUserRequest) => {
   const validation = Joi.object({ username: Joi.string().required(), email: Joi.string().email().required(), password: Joi.string().required() }).validate({ username, email, password });
+
+  // const hash = hashPassword('dimdim');
 
   if (validation.error) {
     return {
@@ -20,7 +22,12 @@ export const createNewUser = async ({ email, password, username }: createUserReq
   const isUsernameExist = await db.users.findOne({ username });
   if (isUsernameExist) return { success: false, message: 'Username already exist' };
 
-  const user = await db.users.create({ username, email, password: hashPassword(password!) });
+  const hashed = hashPassword(password!);
+  const verified = verifyPassword(password!, hashed);
+
+  console.log(verified);
+
+  const user = await db.users.create({ username, email, password });
 
   return { success: true, message: 'User created' };
 };
