@@ -15,5 +15,4 @@ function getClient<T>(service: string) {
   return grpcObj;
 }
 
-export const usersClient = new grpcObj.userPackage.User(`0.0.0.0:${config.grpc.port}`, grpc.credentials.createInsecure());
 export default getClient;

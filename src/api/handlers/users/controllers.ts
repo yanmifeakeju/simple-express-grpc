@@ -1,10 +1,16 @@
 import { RequestHandler } from 'express';
-import { usersClient } from '../../../lib/grpc/client';
+import * as grpc from '@grpc/grpc-js';
+import { config } from '../../../config/config';
+import getClient from '../../../lib/grpc/client';
+import { ProtoGrpcType } from '../../../lib/proto/users';
+
+const client = getClient<ProtoGrpcType>('users');
+const usersSerivce = new client.userPackage.User(`0.0.0.0:${config.grpc.port}`, grpc.credentials.createInsecure());
 
 export const createUserHandler: RequestHandler = async (req, res) => {
   try {
     const { email, password, username } = req.body;
-    usersClient.createUser({ email, password, username }, (err, response) => {
+    usersSerivce.createUser({ email, password, username }, (err, response) => {
       if (err) {
         res.status(500).json({ message: err.message });
       }

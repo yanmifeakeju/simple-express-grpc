@@ -5,11 +5,11 @@ import getClient from '../../../lib/grpc/client';
 import { ProtoGrpcType } from '../../../lib/proto/auth';
 
 const client = getClient<ProtoGrpcType>('auth');
-const connection = new client.authPackage.Auth(`0.0.0.0:${config.grpc.port}`, grpc.credentials.createInsecure());
+const authService = new client.authPackage.Auth(`0.0.0.0:${config.grpc.port}`, grpc.credentials.createInsecure());
 
 export const loginUserIn: RequestHandler = (req, res) => {
   const { email, password } = req.body;
-  connection.loginUser({ email, password }, (err, response) => {
+  authService.loginUser({ email, password }, (err, response) => {
     if (err) {
       return res.status(500).json({ message: err.message });
     }
