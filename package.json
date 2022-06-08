@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:api": "node dist/api/index.js",
+    "start:api:dev": "nodemon dist/api/index.js",
     "start:services": "node dist/services/index.js",
+    "start:services:dev": "nodemon dist/services/index.js",
     "build": "rm -rf dist && tsc",
     "postinstall": "npm run build",
     "proto-gen": "proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=src/lib/proto/ proto/*.proto"
@@ -17,13 +19,16 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.6.7",
     "@grpc/proto-loader": "^0.6.13",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "mongoose": "^6.3.5"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
+    "nodemon": "^2.0.16",
     "typescript": "^4.7.3"
   }
 }

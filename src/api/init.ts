@@ -10,5 +10,9 @@ export const startServer = async (routes: Router, port: number) => {
     res.send('Hello World!');
   });
 
+  app.use((req, res) => {
+    res.status(404).json({ message: `Not Found: "${req.path}"` });
+  });
+
   app.listen(port, () => console.log('Server started'));
 };
