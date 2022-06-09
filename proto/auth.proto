@@ -4,6 +4,7 @@ package authPackage;
 
 service Auth {
   rpc loginUser(loginUserRequest) returns (loginUserResponse) {}
+  rpc validateToken(validateTokenRequest) returns (validateTokenResponse) {}
 }
 
 message loginUserRequest {
@@ -25,4 +26,13 @@ message Data {
 message User {
   string email = 1;
   string username = 2;
+};
+
+message validateTokenRequest { string token = 1; }
+
+message validateTokenResponse {
+  bool success = 1;
+  string message = 2;
+  message obj { User user = 1; }
+  obj data = 3;
 };

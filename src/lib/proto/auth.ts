@@ -14,6 +14,8 @@ export interface ProtoGrpcType {
     User: MessageTypeDefinition
     loginUserRequest: MessageTypeDefinition
     loginUserResponse: MessageTypeDefinition
+    validateTokenRequest: MessageTypeDefinition
+    validateTokenResponse: MessageTypeDefinition
   }
 }
 

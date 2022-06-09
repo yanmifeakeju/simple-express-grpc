@@ -11,3 +11,7 @@ export const getAuthToken = (id: string) => {
     expiresIn: config.auth.jwt.expiresIn
   });
 };
+
+export const verifyAuthToken = (token: string) => {
+  return jwt.verify(token, config.auth.jwt.secret!);
+};

@@ -1,8 +1,22 @@
-import { Schema } from 'mongoose';
-import bcrypt from 'bcryptjs';
-import { getAuthToken, hashPassword, verifyPassword } from '../../lib/utils/auth';
+import { JwtPayload } from 'jsonwebtoken';
+import { HydratedDocument, Model, Schema } from 'mongoose';
+import { getAuthToken, hashPassword, verifyPassword, verifyAuthToken } from '../../lib/utils/auth';
 
-const UserSchema = new Schema({
+export interface IUser {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserMethods {
+  getSignedJwtToken: () => string;
+  matchPassword: (enteredPassword: string) => boolean;
+}
+export interface UserModel extends Model<IUser, {}, IUserMethods> {
+  validateAuthToken: (token: string) => Promise<HydratedDocument<IUser>>;
+}
+
+const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
     required: true,
@@ -27,6 +41,13 @@ UserSchema.pre('save', async function (next) {
 
   this.password = hashPassword(this.password);
 });
+
+UserSchema.statics.validateAuthToken = function (token: string) {
+  const decoded = verifyAuthToken(token);
+  const hasUserId = (decoded: any): decoded is JwtPayload => 'id' in decoded;
+  if (!hasUserId(decoded)) return null;
+  return this.findById(decoded.id);
+};
 
 UserSchema.methods.getSignedJwtToken = function () {
   return getAuthToken(this._id);
