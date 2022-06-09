@@ -11,6 +11,7 @@ export interface ProtoGrpcType {
   authPackage: {
     Auth: SubtypeConstructor<typeof grpc.Client, _authPackage_AuthClient> & { service: _authPackage_AuthDefinition }
     Data: MessageTypeDefinition
+    User: MessageTypeDefinition
     loginUserRequest: MessageTypeDefinition
     loginUserResponse: MessageTypeDefinition
   }
