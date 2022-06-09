@@ -8,8 +8,6 @@ const router = Router();
 router.post('/', createUserHandler);
 
 router.use(protectedRoute(validateToken));
-router.get('/', (_, res) => {
-  res.send('Users');
-});
+router.get('/', (req, res) => res.status(200).json({ success: true, message: 'User retrieved', data: req.user }));
 
 export default router;
