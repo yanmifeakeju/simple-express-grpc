@@ -10,16 +10,12 @@ import { validateTokenResponse, validateTokenResponse__Output } from '../../../l
 const client = getClient<ProtoGrpcType>('auth');
 const authService = new client.authPackage.Auth(`0.0.0.0:${config.grpc.port}`, grpc.credentials.createInsecure());
 
-export const loginUserIn: RequestHandler = (req, res) => {
+export const loginUserIn: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
-  authService.loginUser({ email, password }, (err, response) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
-
-    const responsCode = response?.success ? 201 : 400;
-    return res.status(responsCode).json(response);
-  });
+  const request = promisify(authService.loginUser.bind(authService));
+  const response = await request({ email, password });
+  const responsCode = response?.success ? 201 : 400;
+  return res.status(responsCode).json(response);
 };
 
 export const validateToken = async (token: string) => {
