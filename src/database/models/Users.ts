@@ -28,6 +28,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     required: true,
     unique: true
   },
+
   password: {
     type: String,
     required: true

@@ -8,9 +8,14 @@ const { service } = authPackage.Auth;
 
 const handlers: AuthHandlers = {
   async loginUser(call, callback) {
-    const response = await loginUserIn(call.request);
-    callback(null, response);
+    try {
+      const response = await loginUserIn(call.request);
+      callback(null, response);
+    } catch (error) {
+      callback(error as Error);
+    }
   },
+
   async validateToken(call, callback) {
     const response = await validateAuthToken(call.request.token!);
     callback(null, response);

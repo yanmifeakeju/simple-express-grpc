@@ -1,7 +1,33 @@
-import { Schema } from 'mongoose';
+syntax = 'proto3';
 
-const Directory = new Schema({
-  user: {
+package directoryPackage;
+
+service Directory {
+  rpc addContact(Contact) returns (Response) {}
+}
+
+message Contact {
+  string fullName = 1;
+  string email = 2;
+  string description = 3;
+}
+
+message Address {
+  string street = 1;
+  string city = 2;
+  string state = 3;
+  string country = 4;
+}
+
+message Response {
+  bool success = 1;
+  string message = 2;
+  message Data { string id = 1; }
+  Data data = 3;
+};
+
+/**
+user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
@@ -45,6 +71,5 @@ const Directory = new Schema({
       type: String
     }
   }
-});
 
-export default Directory;
+*/

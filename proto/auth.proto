@@ -15,12 +15,13 @@ message loginUserRequest {
 message loginUserResponse {
   bool success = 1;
   string message = 2;
-  Data data = 3;
-};
 
-message Data {
-  string token = 1;
-  User user = 2;
+  message Data {
+    string token = 1;
+    User user = 2;
+  };
+
+  Data data = 3;
 };
 
 message User {
@@ -33,6 +34,6 @@ message validateTokenRequest { string token = 1; }
 message validateTokenResponse {
   bool success = 1;
   string message = 2;
-  message obj { User user = 1; }
-  obj data = 3;
+  message Data { User user = 1; }
+  Data data = 3;
 };

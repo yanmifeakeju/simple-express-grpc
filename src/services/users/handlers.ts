@@ -1,5 +1,4 @@
 import { createUserRequest } from '../../lib/proto/userPackage/createUserRequest';
-import { createUserResponse__Output } from '../../lib/proto/userPackage/createUserResponse';
 import Joi from 'joi';
 import db from '../../database';
 import { hashPassword, verifyPassword } from '../../lib/utils/auth';
